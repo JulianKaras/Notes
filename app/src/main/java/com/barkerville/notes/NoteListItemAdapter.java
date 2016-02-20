@@ -5,7 +5,6 @@ package com.barkerville.notes;
  */
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.RecyclerView.ViewHolder;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +28,12 @@ public class NoteListItemAdapter extends RecyclerView.Adapter <NoteListItemAdapt
     public ViewHolder onCreateViewHolder (ViewGroup viewGroup, int i){
 
         View v = LayoutInflater.from(mContext).inflate(R.layout.note_list_item, viewGroup, false);
-
+        v.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                removeItem(mRecyclerView.getChildLayoutPosition(v));
+            }
+        });
         return new ViewHolder(v);
     }
 
@@ -45,6 +49,17 @@ public class NoteListItemAdapter extends RecyclerView.Adapter <NoteListItemAdapt
     @Override
     public int getItemCount (){
         return mNoteListItems.size();
+    }
+
+
+    public void addItem(NoteListItem item){
+        mNoteListItems.add(0,item);
+        notifyItemInserted(0);
+    }
+
+    public void removeItem(int position) {
+        mNoteListItems.remove(position);
+        notifyItemRemoved(position);
     }
 
     public static class ViewHolder extends RecyclerView.ViewHolder  {
