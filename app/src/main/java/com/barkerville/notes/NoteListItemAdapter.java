@@ -17,15 +17,18 @@ public class NoteListItemAdapter extends RecyclerView.Adapter <NoteListItemAdapt
 
     private Context mContext;
     private RecyclerView mRecyclerView;
-    private ArrayList<NoteListItem>mNoteListItems = new ArrayList<NoteListItem>();
+    private List<NoteListItem> mNoteListItems = new ArrayList<NoteListItem>();  // this is created to hold the notes that are to be displayed on the RecyclerView.
 
     public NoteListItemAdapter (Context context, RecyclerView recyclerView){
         this.mContext = context;
         this.mRecyclerView = recyclerView;
-        this.mNoteListItems.add(new NoteListItem("This is your first note."));
+        this.mNoteListItems.add(new NoteListItem("This is your first note"));   //this adds a note
+        NoteDAO dao = new NoteDAO(context);
+        mNoteListItems = dao.list();
+
     }
     @Override
-    public ViewHolder onCreateViewHolder (ViewGroup viewGroup, int i){
+    public NoteListItemAdapter.ViewHolder onCreateViewHolder (ViewGroup viewGroup, int i){
 
         View v = LayoutInflater.from(mContext).inflate(R.layout.note_list_item, viewGroup, false);
         v.setOnClickListener(new View.OnClickListener(){

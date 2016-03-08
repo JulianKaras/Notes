@@ -9,7 +9,6 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
-import android.text.Editable;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -58,6 +57,9 @@ public class MainActivity extends AppCompatActivity {
               mAdapter.addItem(item);
               mEditText.setText("");
               mLayoutManager.scrollToPosition(0);
+
+              NoteDAO dao = new NoteDAO(MainActivity.this);
+              dao.save(item);
 
 
             }

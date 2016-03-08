@@ -14,14 +14,18 @@ public class NoteListItem implements Serializable{
     private String status;
     private Calendar date;
 
-    public NoteListItem (String text){
+    public NoteListItem(String text){
 
-        this.text = text;
+        this(text, "open", Calendar.getInstance());
 
     }
 
-   //*** public NoteListItem(String text, String status, Calendar date) {
-   //*** }
+    public NoteListItem(String text, String status, Calendar date) {
+        this.text = text;
+        this.status = status;
+        this.date = date;
+    }
+
 
     public String getText (){
         return this.text;

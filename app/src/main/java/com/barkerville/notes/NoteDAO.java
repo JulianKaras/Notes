@@ -6,6 +6,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabaseCorruptException;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -24,7 +25,7 @@ public class NoteDAO {
 
     public void save(NoteListItem note) {
 
-        NotesDBHelper helper = new NotesDBHelper.getInstance(context);
+        NotesDBHelper helper = new NotesDBHelper(context); // removed .getInstance method from between context and new NotesDBHelper
         SQLiteDatabase db = helper.getWritableDatabase();
 
         ContentValues values = new ContentValues();
@@ -36,8 +37,10 @@ public class NoteDAO {
     }
 
     public List<NoteListItem> list() {
-        NotesDBHelper helper = new NotesDBHelper.getInstance(context);
+        NotesDBHelper helper = new NotesDBHelper(context); // removed .getInstance method from between context and new NotesDBHelper
         SQLiteDatabase db = helper.getReadableDatabase();
+
+
 
         String[] projection = {
 
@@ -58,11 +61,13 @@ public class NoteDAO {
                 sortOrder
         );
 
+        List<NoteListItem> notes = new ArrayList<NoteListItem>();
+
         while (c.moveToNext()) {
             String text = c.getString(c.getColumnIndex(NotesDBContract.Note.COLUMN_NAME_NOTE_TEXT));
             String status = c.getString(c.getColumnIndex(NotesDBContract.Note.COLUMN_NAME_STATUS));
             Calendar date = new GregorianCalendar();
-            date.setTimeInMillis(c.getLong(c.getColumnIndex(NotesDBContract.Note.COLUMN_NAME_NOTE_DATE))*1000);
+            date.setTimeInMillis(c.getLong(c.getColumnIndex(NotesDBContract.Note.COLUMN_NAME_NOTE_DATE)) * 1000);
             notes.add(new NoteListItem(text, status, date));
         }
             return notes;
