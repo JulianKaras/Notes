@@ -16,27 +16,29 @@ public class NoteListItem implements Serializable{
 
     public NoteListItem(String text){
 
-        this(text, "open", Calendar.getInstance());
+        this(null, text, "open", Calendar.getInstance());
 
     }
 
-    public NoteListItem(String text, String status, Calendar date) {
-        this.text = text;
-        this.status = status;
-        this.date = date;
+    public NoteListItem(Long id, String text, String status, Calendar date) {
+            setId(id);
+            setText(text);
+            setStatus(status);
+            setDate(date);
+
     }
 
 
-    public String getText (){
-        return this.text;
-    }
 
     public long getId() {
         return id;
     }
-
     public void setId(long id) {
         this.id = id;
+    }
+
+    public String getText (){
+        return this.text;
     }
 
     public void setText(String text) {

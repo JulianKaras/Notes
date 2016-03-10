@@ -3,12 +3,15 @@ package com.barkerville.notes;
 /**
  * Created by JulianK on 19/02/2016.
  */
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,7 +37,24 @@ public class NoteListItemAdapter extends RecyclerView.Adapter <NoteListItemAdapt
         v.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
+                NoteListItem noteListItem = mNoteListItems.get(mRecyclerView.getChildLayoutPosition(v));
+                NoteDAO dao = new NoteDAO(mContext);
+                dao.delete(noteListItem);
+                Toast.makeText(mContext, "Deleted: " + noteListItem.getText(), Toast.LENGTH_LONG).show();
                 removeItem(mRecyclerView.getChildLayoutPosition(v));
+            }
+
+        });
+        v.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View v) {
+                NoteListItem noteListItem = mNoteListItems.get(mRecyclerView.getChildLayoutPosition(v));
+                removeItem(mRecyclerView.getChildLayoutPosition(v));                               // removes the note previously selected by the user
+                Intent intent = new Intent(mContext, EditNoteActivity.class);                      //intent that calls the EditTextActivity
+                intent.putExtra("Note", noteListItem);                                              // sends a reference to the selected note to the new Activity
+                ((Activity)mContext).startActivityForResult(intent, 1);                             //starts the Activity specified by the intent
+                                                                                                   // removed - Toast.makeText(mContext, "Selected: " + noteListItem.getText(), Toast.LENGTH_LONG).show();
+                return true;                                                                        // indicates that the event was consumed by this handler
             }
         });
         return new ViewHolder(v);
@@ -56,7 +76,7 @@ public class NoteListItemAdapter extends RecyclerView.Adapter <NoteListItemAdapt
 
 
     public void addItem(NoteListItem item){
-        mNoteListItems.add(0,item);
+        mNoteListItems.add(0, item);
         notifyItemInserted(0);
     }
 
