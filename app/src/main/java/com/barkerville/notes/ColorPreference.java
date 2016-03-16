@@ -118,7 +118,7 @@ public class ColorPreference extends AppCompatActivity {
 
                 SharedPreferences forePrefs = getPreferences(Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = forePrefs.edit();
-                editor.setChecked(true);
+                editor.RadioButton(isChecked == true);
 
             };
 
