@@ -9,7 +9,7 @@ import java.util.Calendar;
  */
 public class NoteListItem implements Serializable{
 
-    private long id;
+    private Long id;
     private String text;
     private String status;
     private Calendar date;
@@ -30,10 +30,10 @@ public class NoteListItem implements Serializable{
 
 
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
