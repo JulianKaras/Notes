@@ -115,10 +115,12 @@ public class ColorPreference extends AppCompatActivity {
         saveButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                String value = getCheckedRadioButtonId.getText().toString();
                 SharedPreferences forePrefs = getPreferences(Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = forePrefs.edit();
-                editor.RadioButton(isChecked == true);
+                editor.putString("      ")
+                
+                
 
             };
 
